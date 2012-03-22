@@ -20,6 +20,7 @@ OPTIONS = [
     ('Medium', 'opt_medium', None),
     ('Hard', 'opt_hard', None),
     ('Impossibru!', 'opt_impossibru', None),
+    ('Derp', 'opt_derp', None),
     ('Quit', 'opt_quit', None),
 ]
 
@@ -112,6 +113,10 @@ class MenuScene(Scene):
 
     def opt_impossibru(self):
         self.manager.switch_scene('main', game_mode=Maze.IMPOSSIBRU)
+        return True
+
+    def opt_derp(self):
+        self.manager.switch_scene('main', game_mode=Maze.DERP)
         return True
 
     def opt_quit(self):
