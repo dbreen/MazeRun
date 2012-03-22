@@ -11,10 +11,23 @@ SCREEN_HEIGHT = 600
 SCREEN = (SCREEN_WIDTH, SCREEN_HEIGHT)
 FPS = 30
 
+PLAYER_SPEED = 2
+PLAYER_LINE_THICKNESS = 5
+PLAYER_LINE_COLOR = (0, 255, 0)
+
+# These dimensions should be multiples of 16 so that we get even divisions
+# for all game difficulties.
+MAZE_WIDTH = 768
+MAZE_HEIGHT = 576
+WALL_THICKNESS = 4
+POINT_MARKER_WIDTH = 6
+
 # Colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 TRANSPARENT = (255, 0, 255)
+START_COLOR = (0, 255, 0)
+END_COLOR = (255, 0, 0)
 
 # Menu
 MENU_FONT = os.path.join(MEDIA_PATH, "fonts", "inconsolata.otf")

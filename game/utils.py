@@ -1,5 +1,10 @@
+import random
+
 from game import constants
 
+
+def random_color():
+    return random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
 
 def lighten(color):
     """Extremely simple color lightening algorithm that I guessed would work alright"""

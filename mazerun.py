@@ -12,6 +12,7 @@ def start_game():
 
 
 if __name__ == "__main__":
+    pygame.mixer.pre_init(44100, -16, 2, 1024)
     pygame.init()
     pygame.display.set_caption("MazeRun")
     pygame.font.init()

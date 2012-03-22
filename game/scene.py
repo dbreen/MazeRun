@@ -13,7 +13,7 @@ class SceneManager(object):
         self.clock = clock
         self.fps = fps
 
-    def switch_scene(self, scene_key):
+    def switch_scene(self, scene_key, **kwargs):
         if scene_key not in self._scenes:
             try:
                 scene_class = '%sScene' % scene_key.title()
@@ -22,7 +22,7 @@ class SceneManager(object):
                 scene = SceneClass(self)
                 self._scenes[scene_key] = scene
                 scene.load()
-                scene.setup(first_time=True)
+                scene.setup(first_time=True, **kwargs)
             except ImportError, e:
                 raise SceneError("Scene %s could not be loaded: %s" % (scene_key, e))
         else:
@@ -30,7 +30,7 @@ class SceneManager(object):
                 scene = self._scenes[scene_key]
             except KeyError:
                 raise SceneError("Scene %s not found" % scene_key)
-            scene.setup(first_time=False)
+            scene.setup(first_time=False, **kwargs)
         self._active_scene = scene
 
     def is_loaded(self, scene_key):
@@ -78,7 +78,7 @@ class Scene(object):
         """The first time a scene is switched to, this method is called"""
         pass
 
-    def setup(self, first_time=False):
+    def setup(self, first_time=False, **kwargs):
         """Any time a scene is switched to, this is called. If we are coming back to a scene that's
         already been shown, first_time will be False"""
         pass

@@ -3,17 +3,23 @@ import random
 import sys
 
 from game import constants, maze
+from game.maze import Maze
 from game.media import media
 from game.scene import Scene
 
 # List of menu options (text, action_method, condition) where condition is None or a callable.
 # If it is a callable that returns False, the option is not shown.
+from game.utils import random_color
+
 CONTINUE = 0
 NEW_GAME = 1
 QUIT = 2
 OPTIONS = [
     ('Continue', 'opt_continue', lambda scene: scene.game_running),
-    ('New Course', 'opt_start', None),
+    ('Easy', 'opt_easy', None),
+    ('Medium', 'opt_medium', None),
+    ('Hard', 'opt_hard', None),
+    ('Impossibru!', 'opt_impossibru', None),
     ('Quit', 'opt_quit', None),
 ]
 
@@ -30,7 +36,7 @@ class Pipe(object):
         self.current = rpoint
         self.dir = random.choice(DIRS)
         self.speed = random.randint(2, 6)
-        self.width = 5 # random.randint(3, 10)
+        self.width = constants.PLAYER_LINE_THICKNESS
 
     def update(self):
         # 10% chance of changing direction
@@ -43,9 +49,6 @@ class Pipe(object):
     def draw(self, screen):
         pygame.draw.lines(screen, self.color, False, self.pointlist + [self.current],
                           self.width)
-
-def random_color():
-    return random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
 
 class MenuScene(Scene):
     def load(self):
@@ -63,7 +66,7 @@ class MenuScene(Scene):
     def render_options(self, screen):
         x, y = 30, 20
         menuwidth = 200
-        menusurf = pygame.Surface((menuwidth, 200))
+        menusurf = pygame.Surface((menuwidth, 250))
         menusurf.set_colorkey(constants.TRANSPARENT)
         menusurf.fill(constants.TRANSPARENT)
         for index, (text, action, show) in enumerate(OPTIONS):
@@ -92,11 +95,23 @@ class MenuScene(Scene):
         self.render_options(screen)
 
     def opt_continue(self):
-        self.manager.switch_scene('main')
+        self.manager.switch_scene('main', new_game=False)
         return True
 
-    def opt_start(self):
-        self.manager.switch_scene('main')
+    def opt_easy(self):
+        self.manager.switch_scene('main', game_mode=Maze.EASY)
+        return True
+
+    def opt_medium(self):
+        self.manager.switch_scene('main', game_mode=Maze.MEDIUM)
+        return True
+
+    def opt_hard(self):
+        self.manager.switch_scene('main', game_mode=Maze.HARD)
+        return True
+
+    def opt_impossibru(self):
+        self.manager.switch_scene('main', game_mode=Maze.IMPOSSIBRU)
         return True
 
     def opt_quit(self):
